@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.bignerdranch.android.yelpapp.MapsFragment"
+        android:name="com.bignerdranch.android.yelpapp.fragment.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
