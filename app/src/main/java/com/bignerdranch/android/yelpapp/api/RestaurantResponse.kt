@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 class RestaurantResponse {
     @SerializedName("businesses")
-    lateinit var restaurants:List<YelpRestaurant>
+    lateinit var restaurants: List<YelpRestaurant>
 }
