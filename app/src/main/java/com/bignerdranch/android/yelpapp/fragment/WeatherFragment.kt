@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.yelpapp.R
+import com.bignerdranch.android.yelpapp.data.Condition
 import com.bignerdranch.android.yelpapp.data.Weather
 import com.bignerdranch.android.yelpapp.data.YelpRestaurant
 import com.bignerdranch.android.yelpapp.databinding.FragmentListBinding
@@ -25,23 +26,29 @@ import kotlinx.android.synthetic.main.fragment_weather.*
 
 class WeatherFragment : Fragment() {
 
-
     private lateinit var restaurantViewModel: RestauratViewModel
-    private var weather = emptyList<Weather>()
-    //private var adapter = RestaurantsAdapter(restaurant)
-     var myweather: Weather? =null
-    private val navArgs by navArgs<ListFragmentArgs>()
+
+   private lateinit var weather :Weather
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_weather, container, false)
 
+        weather= Weather(33.3, Condition(text = "sss",icon = "ffff"))
+        val view= inflater.inflate(R.layout.fragment_weather, container, false)
         restaurantViewModel = ViewModelProvider(this).get(RestauratViewModel::class.java)
-        val s= navArgs.lat+","+navArgs.lon
-                 restaurantViewModel.searchWeather( "$WEATHER_API_KEY",s)
-        //title.text= myweather?.temp_c.toString()
+        bind(weather)
             return view
         }
+    fun bind(weather: Weather) {
+        val v=temp.setText( weather.temp_c.toString())
+        desc.text=weather.condition.text
+
+        Glide.with(wheather_image).load(weather.condition.icon).apply(
+            RequestOptions().transforms(
+                CenterCrop(), RoundedCorners(20)
+            )
+        ).into(wheather_image)
+    }
     }
 

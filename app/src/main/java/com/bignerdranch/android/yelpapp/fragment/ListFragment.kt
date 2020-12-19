@@ -2,14 +2,15 @@ package com.bignerdranch.android.yelpapp.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.Constraints.TAG
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.list_item.view.*
 
 
 const val API_KEY =
@@ -33,6 +35,12 @@ class ListFragment : Fragment() {
     private var restaurant = emptyList<YelpRestaurant>()
     private var adapter = RestaurantsAdapter(restaurant)
     private val navArgs by navArgs<ListFragmentArgs>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,9 +48,7 @@ class ListFragment : Fragment() {
         val binding: FragmentListBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
         restaurantViewModel = ViewModelProvider(this).get(RestauratViewModel::class.java)
-        // restaurantViewModel.searchRestaurant("Bearer $API_KEY", "Avocado Toast", "New York")
-        restaurantViewModel.searchLocation("Bearer $API_KEY", navArgs.lat, navArgs.lon)
-
+        restaurantViewModel.searchRestaurant("Bearer $API_KEY","", navArgs.lat, navArgs.lon)
             .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 adapter.setData(it)
             })
@@ -64,7 +70,33 @@ class ListFragment : Fragment() {
             return binding.root
         }
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search, menu)
+        val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.apply {
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(queryText: String): Boolean {
+                    Log.d(TAG, "QueryTextSubmit: $queryText")
+                    restaurantViewModel.searchRestaurant(
+                        "Bearer $API_KEY",
+                        queryText,
+                        navArgs.lat,
+                        navArgs.lon
+                    ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                            adapter.setData(it)
+                        })
+                    return true
+                }
 
+                override fun onQueryTextChange(queryText: String): Boolean {
+                    Log.d(TAG, "QueryTextChange: $queryText")
+                    return false
+                }
+            })
+        }
+    }
     private inner class RestaurantsAdapter(var restaurants: List<YelpRestaurant>) :
         RecyclerView.Adapter<RestaurantsAdapter.ViewHolder>() {
 
@@ -79,9 +111,10 @@ class ListFragment : Fragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val restaurant = restaurants[position]
             holder.bind(restaurant)
-//            val weather: Weather? =null
-//            weather?.temp_c?.let {
-//                holder.bind2(it) }
+            holder.itemView.list_item.setOnClickListener {
+                val action =ListFragmentDirections.actionListFragmentToWeatherFragment()
+               holder.itemView.findNavController().navigate(action)
+            }
 
         }
 
@@ -96,7 +129,7 @@ class ListFragment : Fragment() {
                 binding.name.text = restaurant.name
                 binding.rate.rating = restaurant.rating.toFloat()
                 binding.reviews.text = "${restaurant.numReviews} Reviews"
-                binding.address.text = restaurant.location.address
+                //binding.address.text = restaurant.location.address
                 binding.category.text = restaurant.categories[0].title
                 binding.distance.text = restaurant.displayDistance()
                 Glide.with(binding.imageView).load(restaurant.imageUrl).apply(

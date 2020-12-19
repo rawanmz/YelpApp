@@ -14,12 +14,14 @@ class RestauratViewModel : ViewModel() {
 
     var yelpRepo = ServiceLocator.yelpResponse
     var weatherpRepo = ServiceLocator.weatherResponse
+    private val mutableSearchTerm = MutableLiveData<String>()
 
-    fun searchRestaurant(auth: String, search: String, location: String)
+    fun searchRestaurant(auth: String, search: String, lat: String,lon:String)
             : LiveData<List<YelpRestaurant>> {
         val restaurantslist = MutableLiveData<List<YelpRestaurant>>()
         viewModelScope.launch {
-            restaurantslist.value = yelpRepo.searchRestaurants(auth, search, location)
+            mutableSearchTerm.value = search
+            restaurantslist.value = yelpRepo.searchRestaurants(auth, search, lat, lon)
         }
         return restaurantslist
     }
@@ -39,7 +41,11 @@ class RestauratViewModel : ViewModel() {
         }
         return weatherList
     }
-
+    fun addData(data:YelpRestaurant) {
+        viewModelScope.launch {
+            yelpRepo.addData(data)
+        }
+    }
     fun searchForecastWeather(key: String , q : String , days : String):
             LiveData<List<Forcast>> {
         val forecastlist = MutableLiveData<List<Forcast>>()
