@@ -5,29 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bignerdranch.android.yelpapp.R
+import com.bignerdranch.android.yelpapp.data.YelpRestaurant
+import com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CategoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CategoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    val args by navArgs<CategoryFragmentArgs>()
+    private val viewModell: RestauratViewModel by lazy {
+        ViewModelProvider(this).get(RestauratViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -35,26 +26,38 @@ class CategoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false)
-    }
+        val view= inflater.inflate(R.layout.fragment_category, container, false)
+        val all=view.findViewById(R.id.All) as CardView
+        val coffee=view.findViewById(R.id.coffee) as CardView
+        val restaurant=view.findViewById(R.id.restaurant) as CardView
+        val malls=view.findViewById(R.id.malls) as CardView
+        val museum=view.findViewById(R.id.museumes) as CardView
+        val hotel=view.findViewById(R.id.hotel) as CardView
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CategoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CategoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+all.setOnClickListener {
+    val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon," ")
+    findNavController().navigate(action)
+}
+        coffee.setOnClickListener {
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Coffee")
+            findNavController().navigate(action)
+        }
+        restaurant.setOnClickListener {
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Food")
+            findNavController().navigate(action)
+        }
+        malls.setOnClickListener {
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Malls")
+            findNavController().navigate(action)
+        }
+        museum.setOnClickListener {
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Museums")
+            findNavController().navigate(action)
+        }
+        hotel.setOnClickListener {
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Hotels")
+            findNavController().navigate(action)
+        }
+        return view
     }
 }

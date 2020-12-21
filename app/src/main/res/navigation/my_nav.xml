@@ -9,15 +9,18 @@
         android:id="@+id/listFragment"
         android:name="com.bignerdranch.android.yelpapp.fragment.ListFragment"
         android:label="ListFragment" >
+        <action
+            android:id="@+id/action_listFragment_to_weather_fragment"
+            app:destination="@id/weatherFragment" />
         <argument
             android:name="lat"
             app:argType="string" />
         <argument
             android:name="lon"
             app:argType="string" />
-        <action
-            android:id="@+id/action_listFragment_to_weather_fragment"
-            app:destination="@id/weatherFragment" />
+        <argument
+            android:name="search"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -25,11 +28,11 @@
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action
-            android:id="@+id/action_mapsFragment_to_listFragment"
-            app:destination="@id/listFragment" />
-        <action
             android:id="@+id/action_mapsFragment_to_weatherFragment"
             app:destination="@id/weatherFragment" />
+        <action
+            android:id="@+id/action_mapsFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/weatherFragment"
@@ -41,6 +44,20 @@
         <argument
             android:name="id"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.bignerdranch.android.yelpapp.fragment.CategoryFragment"
+        android:label="CategoryFragment" >
+        <argument
+            android:name="lat"
+            app:argType="string" />
+        <argument
+            android:name="lon"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_categoryFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
 
 </navigation>
