@@ -1,5 +1,6 @@
 package com.bignerdranch.android.yelpapp.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -55,7 +56,7 @@ class ListFragment : Fragment() {
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
             //Display Weather
             //Display Business
-            viewModell.searchRestaurant("Bearer $API_KEY","all",
+            viewModell.searchRestaurant("Bearer $API_KEY",args.search,
                 args.lat, args.lon).observe(viewLifecycleOwner,
                 Observer{
                     adapter.setData(it)
@@ -117,21 +118,22 @@ class ListFragment : Fragment() {
     }
     private inner class RestaurantHolder(private val binding: ListItemBinding)
         :RecyclerView.ViewHolder(binding.root){
+        @SuppressLint("SetTextI18n")
         fun bind(restaurant: YelpRestaurant, weather: Weather.Current?){
 
 
-            binding.name.text = restaurant.name
+            binding.name.text =restaurant.name
             binding.rate.rating = restaurant.rating.toFloat()
+            binding.reviews.text = restaurant.numReviews.toString()+" Reviews"
             binding.category.text = restaurant.categories[0].title
-            binding.distance.text = restaurant.displayDistance()
             Glide.with(binding.imageView)
                 .load(restaurant.imageUrl).apply(
                     RequestOptions().transforms(
                         CenterCrop(), RoundedCorners(20)
                     )).into(binding.imageView)
             binding.weatherDes.text=weather?.condition?.text
-            binding.weather.text = weather?.temp_c.toString()
-            var x= "https://${weather?.condition?.icon}"
+            binding.weather.text = weather?.temp_c.toString()+"°C"
+            val x= "https://${weather?.condition?.icon}"
             if (x=="https://null"){
                 binding.weatherIcon.setImageResource(R.drawable.cloud)
             }else{
@@ -155,8 +157,7 @@ class ListFragment : Fragment() {
             val restaurants = restaurant[position]
             val x = viewModell.searchWeather(WEATHER_API_KEY,"${restaurants.coordinates.latitude},${restaurants.coordinates.longitude}","7").value
             holder.bind(restaurants, x?.current)
-
-                        holder.itemView.list_item.setOnClickListener {
+            holder.itemView.list_item.setOnClickListener {
                 val action =ListFragmentDirections.actionListFragmentToWeatherFragment(restaurants.myid.toString())
                holder.itemView.findNavController().navigate(action)
             }
