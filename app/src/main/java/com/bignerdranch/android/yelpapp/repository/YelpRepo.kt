@@ -6,6 +6,7 @@ import com.bignerdranch.android.yelpapp.data.YelpRestaurant
 import com.bignerdranch.android.yelpapp.database.YelpDao
 
 class YelpRepo(private val yelpApi: YelpApi, private val resDao: YelpDao) {
+
     val readAllData: LiveData<List<YelpRestaurant>> =resDao.readAllData()
     suspend fun searchRestaurants(
         auth: String,
@@ -13,6 +14,7 @@ class YelpRepo(private val yelpApi: YelpApi, private val resDao: YelpDao) {
         lat: String,
         lon:String
     ): List<YelpRestaurant> {
+        resDao.deleteRestaurant()
         val restaurant=yelpApi.searchRestaurants(auth, term, lat,lon).restaurants
         resDao.addData(*restaurant.map {
             YelpRestaurant(
@@ -23,15 +25,13 @@ class YelpRepo(private val yelpApi: YelpApi, private val resDao: YelpDao) {
                 it.distanceInMeters,
                 it.imageUrl,
                 it.categories,
-                    )
+                it.coordinates
+            )
         }.toTypedArray()
         )
         return restaurant
     }
-    suspend fun searchLocation(auth: String, lat: String, lon: String): List<YelpRestaurant> {
-        return yelpApi.searchLocation(auth, lat, lon).restaurants
+    suspend fun deletePlace(){
+        resDao.deleteRestaurant()
     }
-    suspend fun addData(data: YelpRestaurant) {
-        resDao.addData(data)
     }
-}

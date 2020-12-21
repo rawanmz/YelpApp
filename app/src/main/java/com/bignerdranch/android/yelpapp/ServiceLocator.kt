@@ -21,9 +21,7 @@ object ServiceLocator {
         initializeDatabase(app)
         initializeNetworkYelp(app)
         initializeNetworkWeather(app)
-
     }
-
     private fun initializeNetworkYelp(context: Context) {
         retrofit = Retrofit.Builder()
             .baseUrl("https://api.yelp.com/v3/")

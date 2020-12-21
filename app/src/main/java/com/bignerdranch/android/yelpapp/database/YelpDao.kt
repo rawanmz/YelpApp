@@ -3,7 +3,6 @@ package com.bignerdranch.android.yelpapp.database
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.bignerdranch.android.yelpapp.data.YelpRestaurant
 
@@ -12,6 +11,9 @@ interface YelpDao {
     @Query("SELECT * FROM restaurant_table ORDER BY myid ASC ")
     fun readAllData (): LiveData<List<YelpRestaurant>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun addData (vararg business: YelpRestaurant)
+
+    @Query("DELETE FROM restaurant_table")
+    suspend fun deleteRestaurant()
 }

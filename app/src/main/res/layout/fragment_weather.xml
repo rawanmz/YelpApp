@@ -78,10 +78,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <ImageView
-                android:id="@+id/wheather_image"
+                android:id="@+id/weather_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/wheather" />
+                android:contentDescription="@string/weather_icon" />
 
             <TextView
                 android:id="@+id/temp"

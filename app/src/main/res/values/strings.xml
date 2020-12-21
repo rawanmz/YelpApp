@@ -2,7 +2,9 @@
     <string name="app_name">YelpApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="temp">15°C</string>
+    <string name="temp">°C</string>
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="restaurant_photo">Restaurant Photo</string>
 </resources>
