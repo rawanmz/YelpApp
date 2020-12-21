@@ -10,14 +10,13 @@ interface YelpApi {
     suspend fun searchRestaurants(
         @Header("Authorization") authHeader: String,
         @Query("term") searchTerm: String,
-        @Query("latitude") lat: String,
-        @Query("longitude") lon:String
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude:String
     ): RestaurantResponse
 
-    @GET("businesses/search")
-    suspend fun searchLocation(
+    @GET("businesses/{id}")
+    suspend fun detailRestaurants(
         @Header("Authorization") authHeader: String,
-        @Query("latitude") lat: String,
-        @Query("longitude") lon: String
+        @Query("id") searchTerm: String,
     ): RestaurantResponse
 }

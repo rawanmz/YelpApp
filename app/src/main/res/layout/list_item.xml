@@ -34,7 +34,8 @@
             android:layout_width="117dp"
             android:layout_height="142dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/restaurant_photo" />
 
         <RatingBar
             android:id="@+id/rate"
@@ -83,14 +84,38 @@
 
         <TextView
             android:id="@+id/weather"
-            android:layout_width="86dp"
-            android:layout_height="37dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.933" />
+
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="24dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="108dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/weather_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.935"
+            app:layout_constraintStart_toStartOf="@+id/weather"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/wheather" />
+
+        <TextView
+            android:id="@+id/weather_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@android:color/darker_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.862"
-            app:layout_constraintStart_toEndOf="@+id/reviews"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/weather"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.786" />
+            app:layout_constraintVertical_bias="0.677" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
