@@ -76,6 +76,11 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.github.androdocs:Simple-HTTP-Request:v1.0'
+
     // Local Unit Tests
     implementation "androidx.test:core:1.2.0"
     testImplementation "junit:junit:4.13"

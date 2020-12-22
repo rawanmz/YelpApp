@@ -7,9 +7,11 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "restaurant_table")
 data class YelpRestaurant(
-    @PrimaryKey (autoGenerate = true) val myid: Int,
+    @PrimaryKey() @SerializedName("id") val yelpId: String,
     val name: String,
     val rating: Double,
+    val phone:String,
+    //val id:String,
     @SerializedName("review_count") val numReviews: Int,
     @SerializedName("distance") val distanceInMeters: Double,
     @SerializedName("image_url") val imageUrl: String,
