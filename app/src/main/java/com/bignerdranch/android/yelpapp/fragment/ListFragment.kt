@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,22 +38,25 @@ class ListFragment : Fragment() {
     val args by navArgs<ListFragmentArgs>()
     private val viewModell: RestauratViewModel by lazy {
         ViewModelProvider(this).get(RestauratViewModel::class.java)
+
     }
-    private var adapter = RestaurantAdapter(emptyList())
-        override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-        setHasOptionsMenu(true)
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+
+
+        private var adapter = RestaurantAdapter(emptyList())
+                override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            retainInstance = true
+            setHasOptionsMenu(true)
+        }
+                override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding:FragmentListBinding = DataBindingUtil
             .inflate(inflater,R.layout.fragment_list,container,false)
-        val connectivityManager = context?.
-        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+                    val connectivityManager = context?.
+                    getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    val activeNetworkInfo = connectivityManager.activeNetworkInfo
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
             //Display Weather
             //Display Business
@@ -88,8 +92,8 @@ class ListFragment : Fragment() {
                         args.lon
                     ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
-                            adapter.setData(it)
-                        })
+                        adapter.setData(it)
+                    })
                     return true
                 }
 
@@ -102,7 +106,7 @@ class ListFragment : Fragment() {
                 searchView.setQuery(viewModell.searchTerm, false)
             }
         }
-    }
+        }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_clear -> {
@@ -111,18 +115,19 @@ class ListFragment : Fragment() {
                     "",
                     args.lat,
                     args.lon,)
-                    true
+                true
             }
             else -> super.onOptionsItemSelected(item)
-    }
+        }
     }
     private inner class RestaurantHolder(private val binding: ListItemBinding)
         :RecyclerView.ViewHolder(binding.root){
         @SuppressLint("SetTextI18n")
-        fun bind(restaurant: YelpRestaurant, weather: Weather.Current?){
+        fun bind(restaurant: YelpRestaurant){
 
 
             binding.name.text =restaurant.name
+            binding.phone.text=restaurant.phone
             binding.rate.rating = restaurant.rating.toFloat()
             binding.reviews.text = restaurant.numReviews.toString()+" Reviews"
             binding.category.text = restaurant.categories[0].title
@@ -131,18 +136,18 @@ class ListFragment : Fragment() {
                     RequestOptions().transforms(
                         CenterCrop(), RoundedCorners(20)
                     )).into(binding.imageView)
-            binding.weatherDes.text=weather?.condition?.text
-            binding.weather.text = weather?.temp_c.toString()+"°C"
-            val x= "https://${weather?.condition?.icon}"
-            if (x=="https://null"){
-                binding.weatherIcon.setImageResource(R.drawable.cloud)
-            }else{
-                Glide.with(binding.weatherIcon)
-                    .load(x).apply(
-                        RequestOptions().transforms(
-                            CenterCrop(), RoundedCorners(20)
-                        )).into(binding.weatherIcon)
-            }
+//            binding.weatherDes.text=weather?.condition?.text
+//            binding.weather.text = weather?.temp_c.toString()+"°C"
+//            val x= "https://${weather?.condition?.icon}"
+//            if (x=="https://null"){
+//                binding.weatherIcon.setImageResource(R.drawable.cloud)
+//            }else{
+//                Glide.with(binding.weatherIcon)
+//                    .load(x).apply(
+//                        RequestOptions().transforms(
+//                            CenterCrop(), RoundedCorners(20)
+//                        )).into(binding.weatherIcon)
+//            }
         }
     }
     private inner class RestaurantAdapter(private var restaurant:List<YelpRestaurant>)
@@ -155,12 +160,39 @@ class ListFragment : Fragment() {
         override fun getItemCount(): Int = restaurant.size
         override fun onBindViewHolder(holder: RestaurantHolder, position: Int) {
             val restaurants = restaurant[position]
-            val x = viewModell.searchWeather(WEATHER_API_KEY,"${restaurants.coordinates.latitude},${restaurants.coordinates.longitude}","7").value
-            holder.bind(restaurants, x?.current)
+            holder.bind(restaurants)
             holder.itemView.list_item.setOnClickListener {
-                val action =ListFragmentDirections.actionListFragmentToWeatherFragment(restaurants.myid.toString())
-               holder.itemView.findNavController().navigate(action)
-            }
+                        val action =
+                            ListFragmentDirections.actionListFragmentToWeatherFragment(restaurants.yelpId)
+                        findNavController().navigate(action)
+                    }
+//            val connectivityManager = context?.
+//            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+//            if(activeNetworkInfo != null && activeNetworkInfo.isConnected){
+//                val weather = viewModell.searchWeather(WEATHER_API_KEY,
+//                    "${restaurants.coordinates.latitude},${restaurants.coordinates.longitude}"
+//                    ,"7").value
+//                if (weather != null) {
+//                    weather.myWatherId = restaurants.yelpId
+//                    viewModell.addWeather(weather)
+//
+//                    holder.bind(restaurants, weather.current)
+//                    holder.itemView.list_item.setOnClickListener {
+//                        val action =
+//                            ListFragmentDirections.actionListFragmentToWeatherFragment(restaurants.yelpId)
+//                        holder.itemView.findNavController().navigate(action)
+//                    }
+//                }
+//            } else{
+//                val weather = viewModell.getWeather(restaurants.yelpId)
+//                if (weather != null) {
+//                    val x = viewModell.searchWeather(WEATHER_API_KEY,"${restaurants.coordinates.latitude},${restaurants.coordinates.longitude}","7").value
+//                    holder.bind(restaurants, x?.current)
+//
+//            }
+//
+//            }
         }
         fun setData(restaurant: List<YelpRestaurant>){
             this.restaurant = restaurant

@@ -6,11 +6,12 @@ import com.bignerdranch.android.yelpapp.ServiceLocator
 import com.bignerdranch.android.yelpapp.data.Weather
 import com.bignerdranch.android.yelpapp.data.YelpRestaurant
 import com.bignerdranch.android.yelpapp.sharedpreferences.QueryPreferences
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RestauratViewModel(private val app: Application)
     : AndroidViewModel(app) {
-    val weather = MutableLiveData<Weather>()
+    var weather = MutableLiveData<Weather>()
     var yelpRepo = ServiceLocator.yelpResponse
     var weatherpRepo = ServiceLocator.weatherResponse
     val readAll:LiveData<List<YelpRestaurant>> = yelpRepo.readAllData
@@ -37,4 +38,15 @@ class RestauratViewModel(private val app: Application)
         }
         return weather
     }
+//    fun addWeather(weather:Weather) {
+//        viewModelScope.launch {
+//            weatherpRepo.addWather(weather)
+//        }
+//    }
+//    fun getWeather(weatherID:String): LiveData<Weather> {
+//        viewModelScope.launch {
+//            weather.value=weatherpRepo.readAllWeatherData(weatherID)
+//        }
+//        return weather
+//    }
 }

@@ -13,6 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceLocator {
     private lateinit var app: App
     lateinit var retrofit: Retrofit
+    lateinit var retrofit2: Retrofit
+
     lateinit var resDatabase: YelpDatabase
     private lateinit var RemoteSource: YelpApi
     private lateinit var weatherApi: WeatherApi
@@ -30,11 +32,11 @@ object ServiceLocator {
         RemoteSource = retrofit.create(YelpApi::class.java)
     }
     private fun initializeNetworkWeather(context: Context) {
-        retrofit = Retrofit.Builder()
+        retrofit2 = Retrofit.Builder()
             .baseUrl("https://api.weatherapi.com/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        weatherApi = retrofit.create(WeatherApi::class.java)
+        weatherApi = retrofit2.create(WeatherApi::class.java)
     }
     private fun initializeDatabase(context: Context) {
         resDatabase = Room.databaseBuilder(

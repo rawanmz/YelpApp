@@ -71,6 +71,15 @@
             app:layout_constraintTop_toBottomOf="@+id/rate" />
 
         <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/reviews"
+            app:layout_constraintTop_toBottomOf="@+id/category" />
+
+        <TextView
             android:id="@+id/weather"
             android:layout_width="40dp"
             android:layout_height="28dp"
