@@ -14,9 +14,9 @@ import androidx.room.PrimaryKey
 //        onDelete = CASCADE)])
 data class Weather (
     //@PrimaryKey()
-    var myWatherId: String,
+//    var myWatherId: String,
     val current: Current,
-    //val forecast: Forecast,
+    val forecast: Forecast,
   //  val location: Location
 ) {
         data class Current(
