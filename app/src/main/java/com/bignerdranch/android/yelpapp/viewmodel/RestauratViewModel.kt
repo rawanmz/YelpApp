@@ -12,9 +12,13 @@ import kotlinx.coroutines.launch
 class RestauratViewModel(private val app: Application)
     : AndroidViewModel(app) {
     var weather = MutableLiveData<Weather>()
+    var forcast = MutableLiveData<Weather.Forecast.Forecastday>()
     var yelpRepo = ServiceLocator.yelpResponse
     var weatherpRepo = ServiceLocator.weatherResponse
     val readAll:LiveData<List<YelpRestaurant>> = yelpRepo.readAllData
+    val restaurantslist = MutableLiveData<List<YelpRestaurant>>()
+    val restaurantItem = MutableLiveData<YelpRestaurant>()
+
     private val mutableSearchTerm = MutableLiveData<String>()
     val searchTerm: String
         get() = mutableSearchTerm.value ?: ""
@@ -22,7 +26,6 @@ class RestauratViewModel(private val app: Application)
     fun searchRestaurant(auth: String, search: String, lat: String,lon:String)
             : LiveData<List<YelpRestaurant>> {
         QueryPreferences.setStoredQuery(app, search)
-        val restaurantslist = MutableLiveData<List<YelpRestaurant>>()
        mutableSearchTerm.value = QueryPreferences.getStoredQuery(app)
         viewModelScope.launch {
             restaurantslist.value = yelpRepo.searchRestaurants(auth, search, lat, lon)
@@ -32,11 +35,17 @@ class RestauratViewModel(private val app: Application)
 
         return restaurantslist
     }
-    fun searchWeather(key : String,latlon : String,days:String):LiveData<Weather>{
+    fun searchForcastWeather(key : String,latlon: String,days:String):LiveData<Weather>{
         viewModelScope.launch {
             weather.value = weatherpRepo.searchtWeather(key,latlon,days)
         }
         return weather
+    }
+    fun searchResturantById(id:String): MutableLiveData<YelpRestaurant> {
+        viewModelScope.launch {
+          restaurantItem.value=yelpRepo.searchResturantById(id)
+        }
+        return restaurantItem
     }
 //    fun addWeather(weather:Weather) {
 //        viewModelScope.launch {

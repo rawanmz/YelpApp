@@ -109,14 +109,14 @@ class ListFragment : Fragment() {
         }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_item_clear -> {
-                viewModell.searchRestaurant(
-                    "$API_KEY",
-                    "",
-                    args.lat,
-                    args.lon,)
-                true
-            }
+//            R.id.menu_item_clear -> {
+//                viewModell.searchRestaurant(
+//                    "$API_KEY",
+//                    "",
+//                    args.lat,
+//                    args.lon,)
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -124,18 +124,16 @@ class ListFragment : Fragment() {
         :RecyclerView.ViewHolder(binding.root){
         @SuppressLint("SetTextI18n")
         fun bind(restaurant: YelpRestaurant){
-
-
-            binding.name.text =restaurant.name
-            binding.phone.text=restaurant.phone
+            binding.placeName.text =restaurant.name
+            binding.phone.text="Phone: "+restaurant.phone
             binding.rate.rating = restaurant.rating.toFloat()
             binding.reviews.text = restaurant.numReviews.toString()+" Reviews"
             binding.category.text = restaurant.categories[0].title
-            Glide.with(binding.imageView)
+            Glide.with(binding.placeImg)
                 .load(restaurant.imageUrl).apply(
                     RequestOptions().transforms(
                         CenterCrop(), RoundedCorners(20)
-                    )).into(binding.imageView)
+                    )).into(binding.placeImg)
 //            binding.weatherDes.text=weather?.condition?.text
 //            binding.weather.text = weather?.temp_c.toString()+"°C"
 //            val x= "https://${weather?.condition?.icon}"
