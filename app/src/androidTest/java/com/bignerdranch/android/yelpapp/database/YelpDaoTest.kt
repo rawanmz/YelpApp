@@ -41,32 +41,32 @@ class YelpDaoTest{
     @Test
     fun addPlcae()= runBlockingTest{
         val Place= YelpRestaurant("id","name",4.5,
-            "123344455",22,4.3,"url",
+            "123344455",false,22,4.3,"url",
             listOf(YelpCategory("title")), Coordinates(0.0,0.0))
 
         dao.addData(Place)
-        val allPhotos=dao.readAllData().getOrAwaitValue()
-        assertThat(allPhotos).contains(Place)
+        val allData=dao.readAllData().getOrAwaitValue()
+        assertThat(allData).contains(Place)
 
     }
     @Test
-    fun deletePhoto()= runBlockingTest {
+    fun deletePlace()= runBlockingTest {
         val Place= YelpRestaurant("id","name",4.5,
-            "123344455",22,4.3,"url",
+            "123344455",false,22,4.3,"url",
             listOf(YelpCategory("title")), Coordinates(0.0,0.0))
         dao.addData(Place)
         dao.deleteRestaurant()
-        val allPhoto=dao.readAllData().getOrAwaitValue()
-        assertThat(allPhoto).doesNotContain(Place)
+        val allData=dao.readAllData().getOrAwaitValue()
+        assertThat(allData).doesNotContain(Place)
     }
     @Test
     fun searchPlace()= runBlockingTest {
         val Place= YelpRestaurant("id","name",4.5,
-            "123344455",22,4.3,"url",
+            "123344455",false,22,4.3,"url",
             listOf(YelpCategory("title")), Coordinates(0.0,0.0))
         dao.addData(Place)
         dao.searchResturantById(Place.yelpId)
-        val allPhoto=dao.readAllData().getOrAwaitValue()
-        assertThat(allPhoto).contains(Place)
+        val allData=dao.readAllData().getOrAwaitValue()
+        assertThat(allData).contains(Place)
     }
 }
