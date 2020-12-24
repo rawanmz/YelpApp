@@ -1,5 +1,6 @@
 package com.bignerdranch.android.yelpapp.fragment
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -34,6 +35,7 @@ class WeatherFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("SetTextI18n")
     fun bind() {
         restaurantViewModel.searchResturantById(args.id).observe(viewLifecycleOwner,
             Observer {
@@ -155,6 +157,45 @@ class WeatherFragment : Fragment() {
                                 RequestOptions().transforms(
                                     CenterCrop(), RoundedCorners(20)
                                 )).into(icon8)
+
+                        day1.text=it.forecast.forecastday[0].date
+                        Glide.with(day_icon1)
+                            .load("https://${it.forecast.forecastday[0].day.condition.icon}")
+                            .apply(
+                                RequestOptions().transforms(
+                                    CenterCrop(), RoundedCorners(20)
+                                )).into(day_icon1)
+                        daytemp1.text = it.forecast.forecastday[0].day.avgtemp_c.toString() + "°C /"+
+                                it.forecast.forecastday[0].day.avgtemp_f.toString()+"°F"
+                        dayweatherdescription1.text = "Daily Chance of Rain "+it.forecast.forecastday[0].day.daily_chance_of_rain+"%"
+
+
+                        day2.text=it.forecast.forecastday[1].date
+                        Glide.with(day_icon2)
+                            .load("https://${it.forecast.forecastday[1].day.condition.icon}")
+                            .apply(
+                                RequestOptions().transforms(
+                                    CenterCrop(), RoundedCorners(20)
+                                )).into(day_icon2)
+                        daytemp2.text = it.forecast.forecastday[1].day.avgtemp_c.toString() + "°C /"+
+                                it.forecast.forecastday[1].day.avgtemp_f.toString()+"°F"
+                        dayweatherdescription2.text = "Daily Chance of Rain "+it.forecast.forecastday[1].day.daily_chance_of_rain+"%"
+
+
+                        day3.text=it.forecast.forecastday[2].date
+                        Glide.with(day_icon3)
+                            .load("https://${it.forecast.forecastday[2].day.condition.icon}")
+                            .apply(
+                                RequestOptions().transforms(
+                                    CenterCrop(), RoundedCorners(20)
+                                )).into(day_icon3)
+                        daytemp3.text = it.forecast.forecastday[2].day.avgtemp_c.toString() + "°C /"+
+                                it.forecast.forecastday[2].day.avgtemp_f.toString()+"°F"
+                        dayweatherdescription3.text = "Daily Chance of Rain "+it.forecast.forecastday[2].day.daily_chance_of_rain+"%"
+
+
+
+
                     })
 
             })

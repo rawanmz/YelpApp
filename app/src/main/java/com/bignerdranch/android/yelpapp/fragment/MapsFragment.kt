@@ -79,7 +79,7 @@ class MapsFragment : Fragment() {
                 var currentLocation = LatLng(lat, lon)
                 mMap?.addMarker(MarkerOptions().position(currentLocation))
                 mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15F))
-                search = view.findViewById(R.id.search_lcation)
+                search = view.findViewById(R.id.search_lcation) as SearchView
                 search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(p0: String?): Boolean {
                         var location = search.query.toString()
@@ -111,7 +111,7 @@ class MapsFragment : Fragment() {
             }else{
                 ActivityCompat.requestPermissions(
                     requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 44
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
                 )
             }
             return view
