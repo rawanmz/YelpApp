@@ -16,6 +16,8 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bignerdranch.android.yelpapp.R
+import com.bignerdranch.android.yelpapp.data.Coordinates
+import com.bignerdranch.android.yelpapp.sharedpreferences.SharedPreferencesCoordinates
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -34,19 +36,20 @@ class MapsFragment : Fragment() {
     private var lat: Double = 0.0
     private var lon: Double = 0.0
     lateinit var  search:SearchView
+    lateinit var  sharedPreferencesCoordinates: SharedPreferencesCoordinates
 
     private val callback = OnMapReadyCallback { googleMap ->
+
         mMap = googleMap
+        sharedPreferencesCoordinates=SharedPreferencesCoordinates(requireContext())
         googleMap.setOnMapLongClickListener {
             val lat = it.latitude
             val lon = it.longitude
             val location = LatLng(lat, lon)
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-            val action = MapsFragmentDirections.actionMapsFragmentToCategoryFragment(
-                lat.toString(),
-                lon.toString()
-            )
-            findNavController().navigate(action)
+            val coordinates=Coordinates(lat,lon)
+            sharedPreferencesCoordinates.setCoordinate("key",coordinates)
+            findNavController().navigate(R.id.action_mapsFragment_to_categoryFragment)
             googleMap.addMarker(MarkerOptions().position(location))
 
         }

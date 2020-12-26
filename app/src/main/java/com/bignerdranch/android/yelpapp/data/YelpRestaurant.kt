@@ -16,7 +16,8 @@ data class YelpRestaurant(
     @SerializedName("distance") val distanceInMeters: Double,
     @SerializedName("image_url") val imageUrl: String,
     val categories: List<YelpCategory>,
-    val coordinates: Coordinates
+    val coordinates: Coordinates,
+    var listDescription:String?=" "
 
 ) {
     fun displayDistance(): String {

@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.bignerdranch.android.yelpapp.ServiceLocator
 import com.bignerdranch.android.yelpapp.data.Weather
 import com.bignerdranch.android.yelpapp.data.YelpRestaurant
+import com.bignerdranch.android.yelpapp.database.DayPlan
 import com.bignerdranch.android.yelpapp.sharedpreferences.QueryPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,15 +48,16 @@ class RestauratViewModel(private val app: Application)
         }
         return restaurantItem
     }
-//    fun addWeather(weather:Weather) {
-//        viewModelScope.launch {
-//            weatherpRepo.addWather(weather)
-//        }
-//    }
-//    fun getWeather(weatherID:String): LiveData<Weather> {
-//        viewModelScope.launch {
-//            weather.value=weatherpRepo.readAllWeatherData(weatherID)
-//        }
-//        return weather
-//    }
+    val planDays:LiveData<List<DayPlan>> = yelpRepo.readAllDayPlan
+
+    fun addDayPlan(plan: DayPlan) {
+        viewModelScope.launch {
+            yelpRepo.addDayPlan(plan)
+        }
+    }
+    fun deleteDayPlan(plan: DayPlan) {
+        viewModelScope.launch {
+            yelpRepo.deleteDayPlan(plan)
+        }
+    }
 }

@@ -21,4 +21,7 @@
     <string name="museums">Museums</string>
     <string name="malls">Malls</string>
     <string name="hotels">Hotels</string>
+    <string name="map">Map</string>
+    <string name="list">List</string>
+    <string name="my_plan">My Plan</string>
 </resources>
