@@ -46,7 +46,7 @@ object ServiceLocator {
         ).build()
     }
     val yelpResponse: YelpRepo by lazy {
-        YelpRepo(RemoteSource, resDatabase.dao())
+        YelpRepo(RemoteSource, resDatabase.dao(),resDatabase.dayPlanDao())
     }
     val weatherResponse: WeatherRepo by lazy {
         WeatherRepo(weatherApi)

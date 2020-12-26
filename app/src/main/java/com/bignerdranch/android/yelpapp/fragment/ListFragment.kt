@@ -21,6 +21,7 @@ import com.bignerdranch.android.yelpapp.R
 import com.bignerdranch.android.yelpapp.data.*
 import com.bignerdranch.android.yelpapp.databinding.FragmentListBinding
 import com.bignerdranch.android.yelpapp.databinding.ListItemBinding
+import com.bignerdranch.android.yelpapp.sharedpreferences.SharedPreferencesCoordinates
 import com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -40,6 +41,7 @@ class ListFragment : Fragment() {
         ViewModelProvider(this).get(RestauratViewModel::class.java)
 
     }
+    lateinit var  sharedPreferencesCoordinates: SharedPreferencesCoordinates
 
 
         private var adapter = RestaurantAdapter(emptyList())
@@ -60,8 +62,10 @@ class ListFragment : Fragment() {
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
             //Display Weather
             //Display Business
+            sharedPreferencesCoordinates=SharedPreferencesCoordinates(requireContext())
+            val location=sharedPreferencesCoordinates.getCoordinate("latlang")
             viewModell.searchRestaurant("Bearer $API_KEY",args.search,
-                args.lat, args.lon).observe(viewLifecycleOwner,
+                    location.latitude.toString(),location.longitude.toString()).observe(viewLifecycleOwner,
                 Observer{
                     adapter.setData(it)
                 })
@@ -84,12 +88,14 @@ class ListFragment : Fragment() {
         searchView.apply {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(queryText: String): Boolean {
+                    sharedPreferencesCoordinates=SharedPreferencesCoordinates(requireContext())
+                    val location=sharedPreferencesCoordinates.getCoordinate("latlang")
                     Log.d(TAG, "QueryTextSubmit: $queryText")
                     viewModell.searchRestaurant(
                         "Bearer $API_KEY",
                         queryText,
-                        args.lat,
-                        args.lon
+                            location.latitude.toString(),
+                        location.longitude.toString()
                     ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
                         adapter.setData(it)

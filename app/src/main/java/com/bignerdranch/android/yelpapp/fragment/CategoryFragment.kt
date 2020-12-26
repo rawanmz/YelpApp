@@ -14,7 +14,6 @@ import com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel
 
 
 class CategoryFragment : Fragment() {
-    val args by navArgs<CategoryFragmentArgs>()
     private val viewModell: RestauratViewModel by lazy {
         ViewModelProvider(this).get(RestauratViewModel::class.java)
     }
@@ -33,27 +32,27 @@ class CategoryFragment : Fragment() {
         val hotel=view.findViewById(R.id.hotel) as CardView
 
 all.setOnClickListener {
-    val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon," ")
+    val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment("all")
     findNavController().navigate(action)
 }
         coffee.setOnClickListener {
-            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Coffee")
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment("Coffee")
             findNavController().navigate(action)
         }
         restaurant.setOnClickListener {
-            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Food")
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment("Food")
             findNavController().navigate(action)
         }
         malls.setOnClickListener {
-            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Malls")
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment("Malls")
             findNavController().navigate(action)
         }
         museum.setOnClickListener {
-            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Museums")
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment("Museums")
             findNavController().navigate(action)
         }
         hotel.setOnClickListener {
-            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment(args.lat,args.lon,"Hotels")
+            val action =CategoryFragmentDirections.actionCategoryFragmentToListFragment("Hotels")
             findNavController().navigate(action)
         }
         return view

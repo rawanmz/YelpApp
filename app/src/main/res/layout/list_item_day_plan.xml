@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="FavViewModel"
+            type="com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:backgroundTint="#72FFFFFF"
+        android:paddingBottom="4dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="4dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/FavName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:text="Name"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/FavImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/FavCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:text="Category"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/FavImageView"
+            app:layout_constraintTop_toBottomOf="@+id/FavName" />
+        <RatingBar
+            android:id="@+id/FavRate"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:rating="4.5"
+            android:stepSize="0.5"
+            app:layout_constraintStart_toEndOf="@+id/FavImageView"
+            app:layout_constraintTop_toBottomOf="@+id/FavCategory" />
+        <TextView
+            android:id="@+id/FavDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:text="Distance"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toEndOf="@+id/FavImageView"
+            app:layout_constraintTop_toBottomOf="@+id/FavRate" />
+        <ImageView
+            android:id="@+id/FavImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<layout xmlns:tools="http://schemas.android.com/tools"-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/day_plan_list_item"-->
+<!--    >-->
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="DayPlanViewModel"-->
+<!--            type="com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel" />-->
+<!--    </data>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:background="@drawable/border">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dayPlanplaceName"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="12dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/dayPlanplaceImg"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/dayPlanplaceImg"-->
+<!--            android:layout_width="142dp"-->
+<!--            android:layout_height="172dp"-->
+<!--            android:contentDescription="@string/restaurant_photo"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+<!--        <RatingBar-->
+<!--            android:id="@+id/dayPlanrate"-->
+<!--            style="@style/Widget.AppCompat.RatingBar.Small"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginBottom="4dp"-->
+<!--            android:numStars="5"-->
+<!--            android:stepSize="0.5"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/dayPlanreviews"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/dayPlanplaceImg" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dayPlanreviews"-->
+<!--            android:layout_width="127dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:layout_marginStart="12dp"-->
+<!--            android:textColor="@android:color/darker_gray"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/dayPlanplaceImg"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.516" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dayPlancategory"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="4dp"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/dayPlanplaceName"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dayPlanrate" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/dayPlanphone"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="21dp"-->
+<!--            android:layout_marginStart="4dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/dayPlanreviews"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/dayPlancategory" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--</layout>-->
