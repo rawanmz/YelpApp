@@ -16,10 +16,9 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         imageView2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anmation))
-
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }, 1500)
-        }
     }
+}

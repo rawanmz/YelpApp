@@ -4,22 +4,20 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bignerdranch.android.yelpapp.data.Coordinates
 import com.bignerdranch.android.yelpapp.data.YelpCategory
-import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "dayplan_table")
-class DayPlan (
-@PrimaryKey()
-val yelpId: String,
-val name: String,
-val rating: Double,
-val phone:String,
-val is_closed:Boolean,
-@SerializedName("review_count") val numReviews: Int,
-@SerializedName("distance") val distanceInMeters: Double,
-@SerializedName("image_url") val imageUrl: String,
-val categories: List<YelpCategory>,
-val coordinates: Coordinates,
-var listDescription:String?=" "
+class DayPlan(
+    @PrimaryKey()
+    val yelpId: String,
+    var name: String,
+    var rating: Double,
+    var phone: String,
+    var is_closed: Boolean,
+    var numReviews: Int,
+    var distanceInMeters: Double, val imageUrl: String,
+    var categories: List<YelpCategory>,
+    var coordinates: Coordinates,
+    var listDescription: String? = " "
 
 ) {
     fun displayDistance(): String {

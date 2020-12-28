@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">YelpApp</string>
+    <string name="app_name">Find Place</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="temp">°C</string>
+    <string name="temp_">°C /</string>
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
     <string name="weather_icon">Weather icon</string>
@@ -13,9 +14,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="f">°F</string>
     <string name="coffee">Coffee</string>
     <string name="restaurant">Restaurants</string>
     <string name="museums">Museums</string>
@@ -24,4 +23,17 @@
     <string name="map">Map</string>
     <string name="list">List</string>
     <string name="my_plan">My Plan</string>
+    <string name="delete_msg">Deleted Successfully</string>
+    <string name="saved_msg">Description Saved Successfully</string>
+    <string name="food">Food</string>
+    <string name="all">All</string>
+    <string name="phone">Phone:</string>
+    <string name="reviews">Reviews</string>
+    <string name="closed">Closed</string>
+    <string name="open">Open</string>
+    <string name="chance_of_rain">Daily Chance of Rain</string>
+    <string name="percentage">"%"</string>
+    <string name="no_connection">No Connection</string>
+    <string name="no_internet">No Internet</string>
+    <string name="check_internet">Please Check Your Internet Connection</string>
 </resources>

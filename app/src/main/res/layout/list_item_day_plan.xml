@@ -2,6 +2,8 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/day_plan_list_item"
+
     >
     <data>
         <variable

@@ -1,63 +1,81 @@
 package com.bignerdranch.android.yelpapp.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bignerdranch.android.yelpapp.ServiceLocator
 import com.bignerdranch.android.yelpapp.data.Weather
 import com.bignerdranch.android.yelpapp.data.YelpRestaurant
 import com.bignerdranch.android.yelpapp.database.DayPlan
-import com.bignerdranch.android.yelpapp.sharedpreferences.QueryPreferences
-import kotlinx.coroutines.Dispatchers
+import com.bignerdranch.android.yelpapp.repository.WeatherRepoInterface
+import com.bignerdranch.android.yelpapp.repository.YelpRepoInterface
 import kotlinx.coroutines.launch
 
-class RestauratViewModel(private val app: Application)
-    : AndroidViewModel(app) {
+class RestauratViewModel(
+    var yelpRepo: YelpRepoInterface = ServiceLocator.yelpResponse,
+    var weatherRepo: WeatherRepoInterface = ServiceLocator.weatherResponse
+) : ViewModel() {
     var weather = MutableLiveData<Weather>()
-    var forcast = MutableLiveData<Weather.Forecast.Forecastday>()
-    var yelpRepo = ServiceLocator.yelpResponse
-    var weatherpRepo = ServiceLocator.weatherResponse
-    val readAll:LiveData<List<YelpRestaurant>> = yelpRepo.readAllData
-    val restaurantslist = MutableLiveData<List<YelpRestaurant>>()
+    val readAll: LiveData<List<YelpRestaurant>> = yelpRepo.readAllData
+    val restaurantsList = MutableLiveData<List<YelpRestaurant>>()
     val restaurantItem = MutableLiveData<YelpRestaurant>()
+    val dayPlan = MutableLiveData<DayPlan>()
 
     private val mutableSearchTerm = MutableLiveData<String>()
     val searchTerm: String
         get() = mutableSearchTerm.value ?: ""
 
-    fun searchRestaurant(auth: String, search: String, lat: String,lon:String)
+    fun searchRestaurant(auth: String, search: String, lat: String, lon: String)
             : LiveData<List<YelpRestaurant>> {
-        QueryPreferences.setStoredQuery(app, search)
-       mutableSearchTerm.value = QueryPreferences.getStoredQuery(app)
+        //  QueryPreferences.setStoredQuery(app, search)
+        //  mutableSearchTerm.value = QueryPreferences.getStoredQuery(app)
         viewModelScope.launch {
-            restaurantslist.value = yelpRepo.searchRestaurants(auth, search, lat, lon)
+            restaurantsList.value = yelpRepo.searchRestaurants(auth, search, lat, lon)
             mutableSearchTerm.value = search
 
         }
-
-        return restaurantslist
+        return restaurantsList
     }
-    fun searchForcastWeather(key : String,latlon: String,days:String):LiveData<Weather>{
+
+    fun searchForecastWeather(key: String, latlon: String, days: String): LiveData<Weather> {
         viewModelScope.launch {
-            weather.value = weatherpRepo.searchtWeather(key,latlon,days)
+            weather.value = weatherRepo.searchWeather(key, latlon, days)
         }
         return weather
     }
-    fun searchResturantById(id:String): MutableLiveData<YelpRestaurant> {
+
+    fun searchRestaurantById(id: String): MutableLiveData<YelpRestaurant> {
         viewModelScope.launch {
-          restaurantItem.value=yelpRepo.searchResturantById(id)
+            restaurantItem.value = yelpRepo.searchRestaurantById(id)
         }
         return restaurantItem
     }
-    val planDays:LiveData<List<DayPlan>> = yelpRepo.readAllDayPlan
+
+    val planDays: LiveData<List<DayPlan>> = yelpRepo.readAllDayPlan
 
     fun addDayPlan(plan: DayPlan) {
         viewModelScope.launch {
             yelpRepo.addDayPlan(plan)
         }
     }
+
     fun deleteDayPlan(plan: DayPlan) {
         viewModelScope.launch {
             yelpRepo.deleteDayPlan(plan)
         }
+    }
+
+    fun updateDayPlan(plan: DayPlan) {
+        viewModelScope.launch {
+            yelpRepo.updateDayPlan(plan)
+        }
+    }
+
+    fun searchDayPlan(planId: String): MutableLiveData<DayPlan> {
+        viewModelScope.launch {
+            dayPlan.value = yelpRepo.searchPlanById(planId)
+        }
+        return dayPlan
     }
 }
