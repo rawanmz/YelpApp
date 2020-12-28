@@ -24,6 +24,7 @@ object ServiceLocator {
         initializeNetworkYelp(app)
         initializeNetworkWeather(app)
     }
+
     private fun initializeNetworkYelp(context: Context) {
         retrofit = Retrofit.Builder()
             .baseUrl("https://api.yelp.com/v3/")
@@ -31,6 +32,7 @@ object ServiceLocator {
             .build()
         RemoteSource = retrofit.create(YelpApi::class.java)
     }
+
     private fun initializeNetworkWeather(context: Context) {
         retrofit2 = Retrofit.Builder()
             .baseUrl("https://api.weatherapi.com/v1/")
@@ -38,6 +40,7 @@ object ServiceLocator {
             .build()
         weatherApi = retrofit2.create(WeatherApi::class.java)
     }
+
     private fun initializeDatabase(context: Context) {
         resDatabase = Room.databaseBuilder(
             context,
@@ -45,8 +48,9 @@ object ServiceLocator {
             "db"
         ).build()
     }
+
     val yelpResponse: YelpRepo by lazy {
-        YelpRepo(RemoteSource, resDatabase.dao(),resDatabase.dayPlanDao())
+        YelpRepo(RemoteSource, resDatabase.dao(), resDatabase.dayPlanDao())
     }
     val weatherResponse: WeatherRepo by lazy {
         WeatherRepo(weatherApi)

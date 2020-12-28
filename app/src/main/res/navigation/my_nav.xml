@@ -53,6 +53,22 @@
     <fragment
         android:id="@+id/dayPlanList"
         android:name="com.bignerdranch.android.yelpapp.fragment.DayPlanList"
-        android:label="DayPlanList" />
+        android:label="DayPlanList" >
+        <action
+            android:id="@+id/action_dayPlanList_to_detailDayPlan"
+            app:destination="@id/detailDayPlan" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailDayPlan"
+        android:name="com.bignerdranch.android.yelpapp.fragment.DetailDayPlan"
+        android:label="fragment_detail_day_plan"
+        tools:layout="@layout/fragment_detail_day_plan" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detailDayPlan_to_dayPlanList"
+            app:destination="@id/dayPlanList" />
+    </fragment>
 
 </navigation>

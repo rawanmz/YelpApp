@@ -38,17 +38,17 @@ class DayPlanDaoTest {
     fun teardown() {
         database.close()
     }
-//    @Test
-//    fun addPlan()= runBlockingTest{
-//        val Place= DayPlan("id","name",4.5,
-//                "123344455",false,22,4.3,"url",
-//                listOf(YelpCategory("title")), Coordinates(0.0,0.0),"description")
-//
-//        dao.addDayPlanData(Place)
-//        val allData=dao.readDayPlanAllData().getOrAwaitValue()
-//        assertThat(allData).contains(Place)
-//
-//    }
+    @Test
+    fun addPlan()= runBlockingTest{
+        val Place= DayPlan("id","name",4.5,
+                "123344455",false,22,4.3,"url",
+                listOf(YelpCategory("title")), Coordinates(0.0,0.0),"description")
+
+        dao.addDayPlanData(Place)
+        val allData=dao.readDayPlanAllData().getOrAwaitValue()
+        assertThat(allData.contains(Place))
+
+    }
     @Test
     fun deletePlan()= runBlockingTest {
         val Place= DayPlan("id","name",4.5,

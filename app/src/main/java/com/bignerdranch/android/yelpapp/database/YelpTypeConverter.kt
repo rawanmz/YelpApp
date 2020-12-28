@@ -22,24 +22,13 @@ fun fromList(title: List<YelpCategory>): String {
         return gson.fromJson(title, type)
     }
     @TypeConverter
-    fun fromweatherCondition(weatherCondition: Weather.Current):String{
-        return "${weatherCondition.temp_c}, ${weatherCondition.condition.text},${weatherCondition.condition.icon}"
-    }
-    @TypeConverter
-    fun toweatherCondition(condition :String): Weather.Current {
-        val x = condition.split(",")
-        return  Weather.Current(Weather.Current.Condition(x[1],x[2]),x[0].toDouble())
-    }
-
-    @TypeConverter
-    fun toRegion(loc:String): Coordinates {
+    fun toCoordinates(loc:String): Coordinates {
         val type =loc.split(",")
         val location=Coordinates(type[0].toDouble(),type[1].toDouble())
           return location
     }
-
     @TypeConverter
-    fun fromRegion(value: Coordinates): String {
+    fun fromCoordinates(value: Coordinates): String {
         val location = "${value.latitude},${value.longitude} "
         return location
     }

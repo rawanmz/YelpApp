@@ -4,23 +4,19 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bignerdranch.android.yelpapp.R
 import com.bignerdranch.android.yelpapp.data.Coordinates
 import com.bignerdranch.android.yelpapp.sharedpreferences.SharedPreferencesCoordinates
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -35,20 +31,18 @@ class MapsFragment : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var lat: Double = 0.0
     private var lon: Double = 0.0
-    lateinit var  search:SearchView
-    lateinit var  sharedPreferencesCoordinates: SharedPreferencesCoordinates
-
+    lateinit var search: SearchView
+    lateinit var sharedPreferencesCoordinates: SharedPreferencesCoordinates
     private val callback = OnMapReadyCallback { googleMap ->
-
         mMap = googleMap
-        sharedPreferencesCoordinates=SharedPreferencesCoordinates(requireContext())
+        sharedPreferencesCoordinates = SharedPreferencesCoordinates(requireContext())
         googleMap.setOnMapLongClickListener {
             val lat = it.latitude
             val lon = it.longitude
             val location = LatLng(lat, lon)
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-            val coordinates=Coordinates(lat,lon)
-            sharedPreferencesCoordinates.setCoordinate("key",coordinates)
+            val coordinates = Coordinates(lat, lon)
+            sharedPreferencesCoordinates.setCoordinate("key", coordinates)
             findNavController().navigate(R.id.action_mapsFragment_to_categoryFragment)
             googleMap.addMarker(MarkerOptions().position(location))
 
@@ -70,7 +64,7 @@ class MapsFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { place ->
-                var location = place.getResult()
+                var location = place.result
                 if (location != null) {
                     var geocoder = Geocoder(context, Locale.getDefault())
                     var address = geocoder.getFromLocation(
@@ -80,8 +74,8 @@ class MapsFragment : Fragment() {
                     lon = address[0].longitude
                 }
                 var currentLocation = LatLng(lat, lon)
-                mMap?.addMarker(MarkerOptions().position(currentLocation))
-                mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15F))
+                mMap.addMarker(MarkerOptions().position(currentLocation))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15F))
                 search = view.findViewById(R.id.search_lcation) as SearchView
                 search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -109,18 +103,14 @@ class MapsFragment : Fragment() {
                 })
             }
             return view
-
-            //  fusedLocationProviderClient.mapType(this)
-            }else{
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
-                )
-            }
-            return view
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
+            )
         }
-
-
+        return view
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?

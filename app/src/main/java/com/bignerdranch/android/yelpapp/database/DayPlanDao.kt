@@ -2,7 +2,7 @@ package com.bignerdranch.android.yelpapp.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.bignerdranch.android.yelpapp.data.YelpRestaurant
+
 @Dao
 interface DayPlanDao {
 
@@ -10,8 +10,14 @@ interface DayPlanDao {
     fun readDayPlanAllData(): LiveData<List<DayPlan>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addDayPlanData( plan: DayPlan)
+    suspend fun addDayPlanData(plan: DayPlan)
 
     @Delete
     suspend fun deletePlan(plan: DayPlan)
+
+    @Update
+    suspend fun updateData(plan: DayPlan)
+
+    @Query("SELECT * FROM dayplan_table WHERE yelpId  = :valudId ")
+    suspend fun searchPlanById(valudId: String): DayPlan
 }
