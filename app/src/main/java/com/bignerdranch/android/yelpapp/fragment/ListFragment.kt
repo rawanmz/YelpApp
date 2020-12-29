@@ -87,6 +87,7 @@ class ListFragment : Fragment() {
         searchView.apply {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(queryText: String): Boolean {
+
                     sharedPreferencesCoordinates = SharedPreferencesCoordinates(requireContext())
                     val location = sharedPreferencesCoordinates.getCoordinate("latlang")
                     viewModell.searchRestaurant(
@@ -106,6 +107,7 @@ class ListFragment : Fragment() {
                 }
             })
             setOnSearchClickListener {
+                val set = mutableSetOf<String>()
                 searchView.setQuery(viewModell.searchTerm, false)
             }
         }

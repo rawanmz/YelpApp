@@ -2,8 +2,10 @@ package com.bignerdranch.android.yelpapp.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +17,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.yelpapp.BuildConfig
 import com.bignerdranch.android.yelpapp.R
 import com.bignerdranch.android.yelpapp.ServiceLocator
+import com.bignerdranch.android.yelpapp.data.Hour
 import com.bignerdranch.android.yelpapp.database.DayPlan
 import com.bignerdranch.android.yelpapp.viewmodel.MyViewModelFactory
 import com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel
@@ -26,6 +32,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_weather.*
+import kotlinx.android.synthetic.main.hour_item.view.*
 
 
 class WeatherFragment : Fragment() {
@@ -33,9 +40,10 @@ class WeatherFragment : Fragment() {
     private lateinit var restaurantViewModel: RestauratViewModel
     private lateinit var restaurantViewModelFactory: MyViewModelFactory
     private val args by navArgs<WeatherFragmentArgs>()
-
+    private lateinit var adapter: HourAdapter
     private lateinit var dayPlan: DayPlan
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,13 +53,13 @@ class WeatherFragment : Fragment() {
             MyViewModelFactory(ServiceLocator.yelpResponse, ServiceLocator.weatherResponse)
         restaurantViewModel =
             ViewModelProvider(this, restaurantViewModelFactory).get(RestauratViewModel::class.java)
-        bind()
-        return view
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun bind() {
-
+        val recyclerView = view.findViewById<RecyclerView>(R.id.constraintLayout2)
+        adapter = HourAdapter()
+        val myLayutManager = LinearLayoutManager(context)
+        myLayutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView.layoutManager = myLayutManager
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.adapter = adapter
         val v = restaurantViewModel.searchRestaurantById(args.id).observe(viewLifecycleOwner,
             Observer {
                 if (it != null) {
@@ -73,13 +81,16 @@ class WeatherFragment : Fragment() {
                         is_close.text = getString(R.string.open)
                         is_close.setTextColor(Color.parseColor("#9AD9DC"))
                     }
-
                     Glide.with(placeImg)
                         .load(it.imageUrl).apply(
                             RequestOptions().transforms(
                                 CenterCrop(), RoundedCorners(20)
                             )
                         ).into(placeImg)
+                    phoneCallImg.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + dayPlan.phone))
+                        startActivity(intent)
+                    }
                     addImage.setOnClickListener { view ->
                         restaurantViewModel.addDayPlan(dayPlan)
                         val action =
@@ -96,106 +107,7 @@ class WeatherFragment : Fragment() {
                         "${it.coordinates.latitude},${it.coordinates.longitude}",
                         "3"
                     ).observe(viewLifecycleOwner, Observer {
-                        hour1.text = it.forecast.forecastday[0].hour[0].time.split(" ")[1]
-                        temp1.text =
-                            it.forecast.forecastday[0].hour[0].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription1.text = it.forecast.forecastday[0].hour[0].condition.text
-                        Glide.with(icon1)
-                            .load("https://${it.forecast.forecastday[0].hour[0].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon1)
-
-                        hour2.text = it.forecast.forecastday[0].hour[3].time.split(" ")[1]
-                        temp2.text =
-                            it.forecast.forecastday[0].hour[3].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription2.text = it.forecast.forecastday[0].hour[3].condition.text
-                        Glide.with(icon2)
-                            .load("https://${it.forecast.forecastday[0].hour[3].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon2)
-
-                        hour3.text = it.forecast.forecastday[0].hour[6].time.split(" ")[1]
-                        temp3.text =
-                            it.forecast.forecastday[0].hour[6].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription3.text = it.forecast.forecastday[0].hour[6].condition.text
-                        Glide.with(icon3)
-                            .load("https://${it.forecast.forecastday[0].hour[6].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon3)
-
-                        hour4.text = it.forecast.forecastday[0].hour[9].time.split(" ")[1]
-                        temp4.text =
-                            it.forecast.forecastday[0].hour[9].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription4.text = it.forecast.forecastday[0].hour[9].condition.text
-                        Glide.with(icon4)
-                            .load("https://${it.forecast.forecastday[0].hour[9].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon4)
-
-                        hour5.text = it.forecast.forecastday[0].hour[12].time.split(" ")[1]
-                        temp5.text =
-                            it.forecast.forecastday[0].hour[12].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription5.text =
-                            it.forecast.forecastday[0].hour[12].condition.text
-                        Glide.with(icon5)
-                            .load("https://${it.forecast.forecastday[0].hour[12].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon5)
-
-                        hour6.text = it.forecast.forecastday[0].hour[15].time.split(" ")[1]
-                        temp6.text =
-                            it.forecast.forecastday[0].hour[15].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription6.text =
-                            it.forecast.forecastday[0].hour[20].condition.text
-                        Glide.with(icon6)
-                            .load("https://${it.forecast.forecastday[0].hour[15].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon6)
-
-                        hour7.text = it.forecast.forecastday[0].hour[18].time.split(" ")[1]
-                        temp7.text =
-                            it.forecast.forecastday[0].hour[18].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription7.text =
-                            it.forecast.forecastday[0].hour[18].condition.text
-                        Glide.with(icon7)
-                            .load("https://${it.forecast.forecastday[0].hour[18].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon7)
-
-                        hour8.text = it.forecast.forecastday[0].hour[21].time.split(" ")[1]
-                        temp8.text =
-                            it.forecast.forecastday[0].hour[21].temp_c.toString() + getString(R.string.temp)
-                        weatherdescription8.text =
-                            it.forecast.forecastday[0].hour[21].condition.text
-                        Glide.with(icon8)
-                            .load("https://${it.forecast.forecastday[0].hour[21].condition.icon}")
-                            .apply(
-                                RequestOptions().transforms(
-                                    CenterCrop(), RoundedCorners(20)
-                                )
-                            ).into(icon8)
-
+                        adapter.setData(it.forecast.forecastday[0].hour)
                         day1.text = it.forecast.forecastday[0].date
                         Glide.with(day_icon1)
                             .load("https://${it.forecast.forecastday[0].day.condition.icon}")
@@ -210,7 +122,7 @@ class WeatherFragment : Fragment() {
                                 R.string.f
                             )
                         dayweatherdescription1.text =
-                            getString(R.string.chance_of_rain) + it.forecast.forecastday[0]
+                            getString(R.string.chance_of_rain ) + it.forecast.forecastday[0]
                                 .day.daily_chance_of_rain + getString(R.string.percentage)
 
                         day2.text = it.forecast.forecastday[1].date
@@ -255,5 +167,37 @@ class WeatherFragment : Fragment() {
                     Toast.makeText(context, R.string.no_connection, Toast.LENGTH_LONG).show()
                 }
             })
+        return view
+    }
+
+    private inner class HourHolder(view: View) :
+        RecyclerView.ViewHolder(view)
+
+    private inner class HourAdapter : RecyclerView.Adapter<HourHolder>() {
+        var hours = emptyList<Hour>()
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourHolder {
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.hour_item, parent, false)
+            return HourHolder(view)
+        }
+        override fun getItemCount(): Int = hours.size
+
+        override fun onBindViewHolder(holder: HourHolder, position: Int) {
+            val hour = hours[position]
+            holder.itemView.hour1.text = hour.time.split(" ")[1]
+            holder.itemView.temp1.text = hour.temp_c.toString() + getString(R.string.temp)
+            holder.itemView.weatherdescription1.text = hour.condition.text
+            Glide.with(holder.itemView.icon1)
+                .load("https://${hour.condition.icon}")
+                .apply(
+                    RequestOptions().transforms(
+                        CenterCrop(), RoundedCorners(20)
+                    )
+                ).into(holder.itemView.icon1)
+        }
+        fun setData(hours: List<Hour>) {
+            this.hours = hours
+            notifyDataSetChanged()
+        }
     }
 }

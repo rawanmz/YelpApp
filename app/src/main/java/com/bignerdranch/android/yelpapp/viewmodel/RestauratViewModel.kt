@@ -22,9 +22,9 @@ class RestauratViewModel(
     val restaurantItem = MutableLiveData<YelpRestaurant>()
     val dayPlan = MutableLiveData<DayPlan>()
 
-    private val mutableSearchTerm = MutableLiveData<String>()
+    private val mutableSearchTerm = mutableListOf<String>()
     val searchTerm: String
-        get() = mutableSearchTerm.value ?: ""
+        get() = (mutableSearchTerm ?: "").toString()
 
     fun searchRestaurant(auth: String, search: String, lat: String, lon: String)
             : LiveData<List<YelpRestaurant>> {
@@ -32,7 +32,7 @@ class RestauratViewModel(
         //  mutableSearchTerm.value = QueryPreferences.getStoredQuery(app)
         viewModelScope.launch {
             restaurantsList.value = yelpRepo.searchRestaurants(auth, search, lat, lon)
-            mutableSearchTerm.value = search
+            mutableSearchTerm.add(search)
 
         }
         return restaurantsList
