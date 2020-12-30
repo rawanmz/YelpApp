@@ -229,19 +229,17 @@ android:src="@drawable/ic_search"
                                 android:id="@+id/day1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15.4dp"
-                                android:layout_marginLeft="15.4dp"
-                                android:layout_marginTop="15.4dp"
+                                android:layout_marginTop="4dp"
                                 android:lineSpacingExtra="2.8sp"
-                                android:layout_gravity="center_horizontal|start"
                                 android:textColor="#131314"
+                                android:layout_gravity="center"
                                 android:textSize="16.2sp"
                                 android:textStyle="bold" />
 
                             <ImageView
                                 android:id="@+id/day_icon1"
                                 android:layout_width="80dp"
-                                android:layout_height="50dp"
+                                android:layout_height="70dp"
                                 android:layout_margin="15.4dp"
                                 android:layout_gravity="center"
                                 android:scaleType="center" />
@@ -303,22 +301,19 @@ android:src="@drawable/ic_search"
                                 android:id="@+id/day2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15.4dp"
-                                android:layout_marginLeft="15.4dp"
-                                android:layout_marginTop="15.4dp"
+                                android:layout_marginTop="4dp"
                                 android:lineSpacingExtra="2.8sp"
                                 android:textColor="#131314"
-                                android:layout_gravity="center_horizontal|start"
+                                android:layout_gravity="center"
                                 android:textSize="16.2sp"
                                 android:textStyle="bold" />
 
                             <ImageView
                                 android:id="@+id/day_icon2"
                                 android:layout_width="80dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
+                                android:layout_height="70dp"
                                 android:layout_margin="15.4dp"
-
+                                android:layout_gravity="center"
                                 android:scaleType="center" />
 
                             <TextView
@@ -353,7 +348,6 @@ android:src="@drawable/ic_search"
 
 
                     </androidx.cardview.widget.CardView>
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="180dp"
                         android:layout_height="220dp"
@@ -378,22 +372,19 @@ android:src="@drawable/ic_search"
                                 android:id="@+id/day3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15.4dp"
-                                android:layout_marginLeft="15.4dp"
-                                android:layout_marginTop="15.4dp"
+                                android:layout_marginTop="4dp"
                                 android:lineSpacingExtra="2.8sp"
                                 android:textColor="#131314"
-                                android:layout_gravity="center_horizontal|start"
+                                android:layout_gravity="center"
                                 android:textSize="16.2sp"
                                 android:textStyle="bold" />
 
                             <ImageView
                                 android:id="@+id/day_icon3"
                                 android:layout_width="80dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
+                                android:layout_height="70dp"
                                 android:layout_margin="15.4dp"
-
+                                android:layout_gravity="center"
                                 android:scaleType="center" />
 
                             <TextView
@@ -428,8 +419,6 @@ android:src="@drawable/ic_search"
 
 
                     </androidx.cardview.widget.CardView>
-
-
 
                 </LinearLayout>
             </HorizontalScrollView>

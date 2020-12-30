@@ -60,28 +60,47 @@
 
         <EditText
             android:id="@+id/descriptionedittext"
-            android:layout_width="291dp"
-            android:layout_height="132dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="296dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
             android:background="#8BEDEDED"
             android:ems="10"
             android:gravity="top"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.282"
+            app:layout_constraintHorizontal_bias="0.542"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptiontextView" />
 
         <Button
             android:id="@+id/savebutton"
-            android:layout_width="155dp"
+            android:layout_width="120dp"
             android:layout_height="73dp"
-            android:text="Save"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
+            android:text="@string/save"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionedittext"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/Detail"
+            android:layout_width="120dp"
+            android:layout_height="73dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="28dp"
+            android:text="@string/detail"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/savebutton"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionedittext" />
 
