@@ -127,7 +127,6 @@ class RestauratViewModelTest {
     @Test
     fun `test fetch weather return value`() =
         mainCoroutineRule.dispatcher.runBlockingTest {
-
             assert(weatherFakeRepository.weather.forecast.forecastday.isNotEmpty())
         }
 }

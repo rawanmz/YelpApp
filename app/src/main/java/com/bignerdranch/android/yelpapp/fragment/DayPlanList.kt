@@ -1,10 +1,12 @@
 package com.bignerdranch.android.yelpapp.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -53,9 +55,22 @@ class DayPlanList : Fragment() {
         val item = object : SwipeDelete(requireContext(), 0, ItemTouchHelper.LEFT) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 super.onSwiped(viewHolder, direction)
-                adapter.delete(viewHolder.adapterPosition)
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle(R.string.delete_place)
+                builder.setMessage(R.string.delete_confirmation)
+                builder.setPositiveButton(R.string.yes) { dialogInterface: DialogInterface, i: Int ->
+                    adapter.delete(viewHolder.adapterPosition)
+                    adapter?.notifyDataSetChanged()
+                }
+                builder.setNegativeButton(R.string.no,{ dialogInterface: DialogInterface, i: Int -> })
+                adapter?.notifyDataSetChanged()
+                builder.setIcon(R.drawable.ic_baseline_delete_24)
+                builder.show()
+
             }
-        }
+
+            }
+
         SwipeFunction(binding, item)
         return binding.root
     }

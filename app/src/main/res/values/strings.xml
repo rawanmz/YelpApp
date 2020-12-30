@@ -20,9 +20,9 @@
     <string name="museums">Museums</string>
     <string name="malls">Malls</string>
     <string name="hotels">Hotels</string>
-    <string name="map">Map</string>
-    <string name="home">Home</string>
-    <string name="my_plan">My Plan</string>
+    <string name="map"> Map  </string>
+    <string name="home">  Home  </string>
+    <string name="my_plan">  My Plan  </string>
     <string name="delete_msg">Deleted Successfully</string>
     <string name="saved_msg">Description Saved Successfully</string>
     <string name="food">Food</string>
@@ -36,4 +36,14 @@
     <string name="no_connection">No Connection</string>
     <string name="no_internet">No Internet</string>
     <string name="check_internet">Please Check Your Internet Connection</string>
+    <string name="detail">Detail</string>
+    <string name="no">No</string>
+
+    <string name="yes">Yes</string>
+    <string name="save">Save</string>
+    <string name="no_place">No Places Available Here</string>
+    <string name="please_change_location">Please Change Location</string>
+    <string name="delete_confirmation">Are You Sure You Want To Delete It</string>
+    <string name="delete_place">Delete Place From Your Plan</string>
+
 </resources>

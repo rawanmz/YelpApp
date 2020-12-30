@@ -69,6 +69,10 @@ class DetailDayPlan : Fragment() {
                         val action = DetailDayPlanDirections.actionDetailDayPlanToDayPlanList()
                         findNavController().navigate(action)
                     }
+                    Detail.setOnClickListener {
+                        val action=DetailDayPlanDirections.actionDetailDayPlanToWeatherFragment(args.id)
+                        findNavController().navigate(action)
+                    }
                 }
             })
     }

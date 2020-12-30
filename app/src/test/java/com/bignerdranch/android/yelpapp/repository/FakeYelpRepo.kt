@@ -81,5 +81,4 @@ class FakeYelpRepo : YelpRepoInterface {
         }
         return dayPlan as DayPlan
     }
-
 }

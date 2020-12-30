@@ -1,9 +1,11 @@
 package com.bignerdranch.android.yelpapp.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Spinner
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,7 +36,6 @@ class ListFragment : Fragment() {
     private lateinit var viewModell: RestauratViewModel
     private lateinit var restaurantViewModelFactory: MyViewModelFactory
     lateinit var sharedPreferencesCoordinates: SharedPreferencesCoordinates
-
     private var adapter = RestaurantAdapter(emptyList())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,7 @@ class ListFragment : Fragment() {
         )
         viewModell =
             ViewModelProvider(this, restaurantViewModelFactory).get(RestauratViewModel::class.java)
+
         val connectivityManager =
             context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
@@ -65,7 +67,15 @@ class ListFragment : Fragment() {
                 location.latitude.toString(), location.longitude.toString()
             ).observe(viewLifecycleOwner,
                 Observer {
-                    adapter.setData(it)
+                    if(it.isNotEmpty()){
+                        adapter.setData(it)
+                    }else{
+                        AlertDialog.Builder(requireContext())
+                                .setTitle(getString(R.string.no_place))
+                                .setMessage(getString(R.string.please_change_location))
+                                .setIcon(R.drawable.logo)
+                                .setCancelable(true).show()
+                    }
                 })
         } else {
             viewModell.readAll.observe(viewLifecycleOwner, Observer { Places ->
@@ -115,6 +125,7 @@ class ListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -155,7 +166,6 @@ class ListFragment : Fragment() {
             }
 
         }
-
         fun setData(restaurant: List<YelpRestaurant>) {
             this.restaurant = restaurant
             notifyDataSetChanged()
