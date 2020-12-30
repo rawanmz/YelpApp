@@ -22,7 +22,7 @@ import com.bignerdranch.android.yelpapp.database.DayPlan
 import com.bignerdranch.android.yelpapp.databinding.FragmentDayPlanListBinding
 import com.bignerdranch.android.yelpapp.databinding.ListItemDayPlanBinding
 import com.bignerdranch.android.yelpapp.viewmodel.MyViewModelFactory
-import com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel
+import com.bignerdranch.android.yelpapp.viewmodel.MyViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -33,7 +33,7 @@ import java.util.*
 
 class DayPlanList : Fragment() {
 
-    private lateinit var viewModell: RestauratViewModel
+    private lateinit var viewModell: MyViewModel
     private lateinit var restaurantViewModelFactory: MyViewModelFactory
     var list: MutableList<DayPlan>? = null
     var singlePlan = mutableListOf<DayPlan>()
@@ -48,7 +48,7 @@ class DayPlanList : Fragment() {
         restaurantViewModelFactory =
             MyViewModelFactory(ServiceLocator.yelpResponse, ServiceLocator.weatherResponse)
         viewModell =
-            ViewModelProvider(this, restaurantViewModelFactory).get(RestauratViewModel::class.java)
+            ViewModelProvider(this, restaurantViewModelFactory).get(MyViewModel::class.java)
         viewModell.planDays.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
         })

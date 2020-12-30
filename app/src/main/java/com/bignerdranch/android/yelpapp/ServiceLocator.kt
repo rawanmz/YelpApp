@@ -27,25 +27,25 @@ object ServiceLocator {
 
     private fun initializeNetworkYelp(context: Context) {
         retrofit = Retrofit.Builder()
-            .baseUrl("https://api.yelp.com/v3/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+                .baseUrl("https://api.yelp.com/v3/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         RemoteSource = retrofit.create(YelpApi::class.java)
     }
 
     private fun initializeNetworkWeather(context: Context) {
         retrofit2 = Retrofit.Builder()
-            .baseUrl("https://api.weatherapi.com/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+                .baseUrl("https://api.weatherapi.com/v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         weatherApi = retrofit2.create(WeatherApi::class.java)
     }
 
     private fun initializeDatabase(context: Context) {
         resDatabase = Room.databaseBuilder(
-            context,
-            YelpDatabase::class.java,
-            "db"
+                context,
+                YelpDatabase::class.java,
+                "db"
         ).build()
     }
 
