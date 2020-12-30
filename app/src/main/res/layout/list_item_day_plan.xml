@@ -8,7 +8,7 @@
     <data>
         <variable
             name="FavViewModel"
-            type="com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel" />
+            type="com.bignerdranch.android.yelpapp.viewmodel.MyViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

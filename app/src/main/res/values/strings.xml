@@ -45,5 +45,7 @@
     <string name="please_change_location">Please Change Location</string>
     <string name="delete_confirmation">Are You Sure You Want To Delete It</string>
     <string name="delete_place">Delete Place From Your Plan</string>
-
+    <string name="sort">Sort by</string>
+    <string name="rating">Rating</string>
+    <string name="distance">Distance</string>
 </resources>

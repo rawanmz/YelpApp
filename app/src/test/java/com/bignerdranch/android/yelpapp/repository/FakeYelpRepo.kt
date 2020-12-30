@@ -68,7 +68,7 @@ class FakeYelpRepo : YelpRepoInterface {
             if (it.yelpId == plan.yelpId) {
                 dayPlanList.set(index, plan)
             }
-            index = index + 1
+            index += 1
         }
     }
 

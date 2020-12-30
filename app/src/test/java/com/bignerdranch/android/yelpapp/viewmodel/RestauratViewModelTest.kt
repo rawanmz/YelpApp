@@ -27,7 +27,7 @@ class RestauratViewModelTest {
     private val yelpFakeRepository = FakeYelpRepo()
     private val weatherFakeRepository = FakeWeatherRepo()
 
-    private val viewModel = RestauratViewModel(
+    private val viewModel = MyViewModel(
         yelpRepo = yelpFakeRepository,
         weatherRepo = weatherFakeRepository
     )

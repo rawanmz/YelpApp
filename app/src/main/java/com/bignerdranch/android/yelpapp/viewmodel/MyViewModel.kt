@@ -1,12 +1,9 @@
 package com.bignerdranch.android.yelpapp.viewmodel
 
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bignerdranch.android.yelpapp.R
 import com.bignerdranch.android.yelpapp.ServiceLocator
 import com.bignerdranch.android.yelpapp.data.Weather
 import com.bignerdranch.android.yelpapp.data.YelpRestaurant
@@ -15,9 +12,9 @@ import com.bignerdranch.android.yelpapp.repository.WeatherRepoInterface
 import com.bignerdranch.android.yelpapp.repository.YelpRepoInterface
 import kotlinx.coroutines.launch
 
-class RestauratViewModel(
-    var yelpRepo: YelpRepoInterface = ServiceLocator.yelpResponse,
-    var weatherRepo: WeatherRepoInterface = ServiceLocator.weatherResponse
+class MyViewModel(
+        var yelpRepo: YelpRepoInterface = ServiceLocator.yelpResponse,
+        var weatherRepo: WeatherRepoInterface = ServiceLocator.weatherResponse
 ) : ViewModel() {
     var weather = MutableLiveData<Weather>()
     val readAll: LiveData<List<YelpRestaurant>> = yelpRepo.readAllData
@@ -25,21 +22,11 @@ class RestauratViewModel(
     val restaurantItem = MutableLiveData<YelpRestaurant>()
     val dayPlan = MutableLiveData<DayPlan>()
 
-     val mutableSearchTerm = mutableListOf<String>()
-    val searchTerm: String
-        get() = (mutableSearchTerm ?: "").toString()
-
-//    var spinner = (R.id.spinner)
-//
-//        val adapter = ListAdapter(this,android.R.layout.simple_spinner_item, mutableSearchTerm)
-//           spinner.adapter = adapter
 
     fun searchRestaurant(auth: String, search: String, lat: String, lon: String)
             : LiveData<List<YelpRestaurant>> {
         viewModelScope.launch {
             restaurantsList.value = yelpRepo.searchRestaurants(auth, search, lat, lon)
-            mutableSearchTerm.add(search)
-
         }
         return restaurantsList
     }

@@ -7,6 +7,17 @@
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     app:collapseIcon="@drawable/ic_search"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:theme="@style/Widget.AppCompat.ActionBar.TabBar"
     android:background="?attr/colorPrimary">
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="417dp"
+        android:layout_height="98dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/restaurant_recycler_view"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.appcompat.widget.Toolbar>

@@ -51,24 +51,24 @@ class MapsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_maps, container, false)
         fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireContext())
+                LocationServices.getFusedLocationProviderClient(requireContext())
         if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { place ->
                 var location = place.result
                 if (location != null) {
                     var geocoder = Geocoder(context, Locale.getDefault())
                     var address = geocoder.getFromLocation(
-                        location.latitude, location.longitude, 1
+                            location.latitude, location.longitude, 1
                     )
                     lat = address[0].latitude
                     lon = address[0].longitude
@@ -78,6 +78,7 @@ class MapsFragment : Fragment() {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15F))
                 search = view.findViewById(R.id.search_lcation) as SearchView
                 search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
                     override fun onQueryTextSubmit(p0: String?): Boolean {
                         var location = search.query.toString()
                         var list = emptyList<Address>()
@@ -87,6 +88,7 @@ class MapsFragment : Fragment() {
 
                                 list = geocoder.getFromLocationName(location, 1)
                             } catch (e: Exception) {
+
                                 e.printStackTrace()
                             }
                             val adress: Address = list.get(0)
@@ -105,12 +107,13 @@ class MapsFragment : Fragment() {
             return view
         } else {
             ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
+                    requireActivity(),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
             )
         }
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?

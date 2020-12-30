@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bignerdranch.android.yelpapp.R
 import com.bignerdranch.android.yelpapp.database.DayPlan
-import com.bignerdranch.android.yelpapp.viewmodel.RestauratViewModel
+import com.bignerdranch.android.yelpapp.viewmodel.MyViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_detail_day_plan.*
 
 class DetailDayPlan : Fragment() {
 
-    private lateinit var myViewModel: RestauratViewModel
+    private lateinit var myViewModel: MyViewModel
     private val args by navArgs<DetailDayPlanArgs>()
     private lateinit var dayPlan: DayPlan
     override fun onCreateView(
@@ -30,7 +30,7 @@ class DetailDayPlan : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail_day_plan, container, false)
-        myViewModel = ViewModelProvider(this).get(RestauratViewModel::class.java)
+        myViewModel = ViewModelProvider(this).get(MyViewModel::class.java)
         bindData()
         return view
     }
